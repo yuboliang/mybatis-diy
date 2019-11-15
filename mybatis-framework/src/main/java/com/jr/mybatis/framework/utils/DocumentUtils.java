@@ -19,7 +19,7 @@ public class DocumentUtils {
         try {
             return reader.read(inputStream);
         } catch (DocumentException e) {
-            // todo 记录日志
+            log.error("解析xml异常", e);
             throw new RuntimeException(e);
         }
     }

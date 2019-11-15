@@ -103,6 +103,8 @@ public class XmlConfigBuilder {
         Class<?> resultTypeClass = resolveClass(resultType);
         String statementType = StringUtils.isBlank(selectElement.attributeValue("statementType")) ? "prepared" : selectElement.attributeValue("statementType");
 
+
+
         MappedStatement mappedStatement = new MappedStatement.MappedStatementBuilder().statementId(id).parameterTypeClass(parameterTypeClass).resultTypeClass(resultTypeClass).statementType(statementType).build();
         configuration.addMappedStatement(namespace + id, mappedStatement);
     }
