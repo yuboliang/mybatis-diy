@@ -107,7 +107,9 @@ public class XmlConfigBuilder {
         XmlScriptParser xmlScriptParser = new XmlScriptParser();
         SqlSource sqlSource = xmlScriptParser.parseSqlSource(selectElement);
 
-        MappedStatement mappedStatement = new MappedStatement.MappedStatementBuilder().statementId(id).parameterTypeClass(parameterTypeClass).resultTypeClass(resultTypeClass).statementType(statementType).build();
+        MappedStatement mappedStatement = new MappedStatement.MappedStatementBuilder().statementId(id)
+                .parameterTypeClass(parameterTypeClass).resultTypeClass(resultTypeClass)
+                .statementType(statementType).sqlSource(sqlSource).build();
         configuration.addMappedStatement(namespace + id, mappedStatement);
     }
 

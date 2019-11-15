@@ -1,6 +1,7 @@
 package com.jr.mybatis.framework.config;
 
 
+import com.jr.mybatis.framework.sqlsource.SqlSource;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,6 @@ public class MappedStatement {
 	private Class<?> parameterTypeClass;
 	private Class<?> resultTypeClass;
 	private String statementType;
-
-	
+	private SqlSource sqlSource;
 
 }
