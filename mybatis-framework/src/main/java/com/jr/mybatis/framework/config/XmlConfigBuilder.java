@@ -1,5 +1,6 @@
 package com.jr.mybatis.framework.config;
 
+import com.jr.mybatis.framework.sqlsource.SqlSource;
 import com.jr.mybatis.framework.utils.DocumentUtils;
 import com.jr.mybatis.framework.utils.ResourceUtils;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -103,7 +104,8 @@ public class XmlConfigBuilder {
         Class<?> resultTypeClass = resolveClass(resultType);
         String statementType = StringUtils.isBlank(selectElement.attributeValue("statementType")) ? "prepared" : selectElement.attributeValue("statementType");
 
-
+        XmlScriptParser xmlScriptParser = new XmlScriptParser();
+        SqlSource sqlSource = xmlScriptParser.parseSqlSource(selectElement);
 
         MappedStatement mappedStatement = new MappedStatement.MappedStatementBuilder().statementId(id).parameterTypeClass(parameterTypeClass).resultTypeClass(resultTypeClass).statementType(statementType).build();
         configuration.addMappedStatement(namespace + id, mappedStatement);

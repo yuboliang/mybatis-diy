@@ -15,7 +15,7 @@ public class IfSqlNode implements SqlNode {
 
     private String testOgnl;
 
-    List<SqlNode> sqlNodeList;
+    private SqlNode sqlNode;
 
     @Override
     public void apply(DynamicContext context) {
@@ -24,7 +24,7 @@ public class IfSqlNode implements SqlNode {
         boolean test = OgnlUtils.evaluateBoolean(testOgnl, context.getParam());
 
         if (test) {
-            sqlNodeList.forEach(node -> node.apply(context));
+            sqlNode.apply(context);
         }
     }
 }
