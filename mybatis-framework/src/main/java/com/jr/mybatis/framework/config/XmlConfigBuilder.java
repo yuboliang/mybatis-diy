@@ -1,11 +1,8 @@
 package com.jr.mybatis.framework.config;
 
-import com.jr.mybatis.framework.sqlsource.SqlSource;
 import com.jr.mybatis.framework.utils.DocumentUtils;
 import com.jr.mybatis.framework.utils.ResourceUtils;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.lang3.ClassUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 
@@ -92,34 +89,14 @@ public class XmlConfigBuilder {
 
         List<Element> selectElement = mapperRootElement.elements("select");
         selectElement.forEach(element -> {
-            parseSelect(namespace, element);
+            XmlStatementBuilder xmlStatementBuilder = new XmlStatementBuilder(namespace, element);
+            MappedStatement mappedStatement = xmlStatementBuilder.parseSelect();
+
+            configuration.addMappedStatement(namespace + "." + mappedStatement.getStatementId(), mappedStatement);
         });
 
     }
 
-    private void parseSelect(String namespace, Element selectElement) {
-        String id = selectElement.attributeValue("id");
-        String parameterType = selectElement.attributeValue("parameterType");
-        Class<?> parameterTypeClass = resolveClass(parameterType);
-        String resultType = selectElement.attributeValue("resultType");
-        Class<?> resultTypeClass = resolveClass(resultType);
-        String statementType = StringUtils.isBlank(selectElement.attributeValue("statementType")) ? "prepared" : selectElement.attributeValue("statementType");
 
-        XmlScriptParser xmlScriptParser = new XmlScriptParser();
-        SqlSource sqlSource = xmlScriptParser.parseSqlSource(selectElement);
-
-        MappedStatement mappedStatement = new MappedStatement.MappedStatementBuilder().statementId(id)
-                .parameterTypeClass(parameterTypeClass).resultTypeClass(resultTypeClass)
-                .statementType(statementType).sqlSource(sqlSource).build();
-        configuration.addMappedStatement(namespace + "." + id, mappedStatement);
-    }
-
-    public Class<?> resolveClass(String className) {
-        try {
-            return ClassUtils.getClass(className);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 }
