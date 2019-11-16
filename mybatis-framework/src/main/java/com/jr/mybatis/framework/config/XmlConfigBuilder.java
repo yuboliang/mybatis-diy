@@ -57,9 +57,12 @@ public class XmlConfigBuilder {
         Properties properties = new Properties();
 
         if (type.equals("DBCP")) {
-            String name = dataSourceElement.attributeValue("name");
-            String value = dataSourceElement.attributeValue("value");
-            properties.setProperty(name, value);
+            List<Element> propertyElementList = dataSourceElement.elements("property");
+            propertyElementList.forEach(propertyElement -> {
+                String name = propertyElement.attributeValue("name");
+                String value = propertyElement.attributeValue("value");
+                properties.setProperty(name, value);
+            });
         }
 
         BasicDataSource dataSource = new BasicDataSource();
@@ -76,7 +79,7 @@ public class XmlConfigBuilder {
         List<Element> mapperElementList = mappersElement.elements("mapper");
 
         mapperElementList.forEach(mapperElement -> {
-            String mapperResource = mapperElement.attributeValue("mapper/UserMapper.xml");
+            String mapperResource = mapperElement.attributeValue("resource");
             InputStream inputStream = ResourceUtils.getResourceAsStream(mapperResource);
             // 解析mapper的xml获取根节点
             parseMapper(inputStream);

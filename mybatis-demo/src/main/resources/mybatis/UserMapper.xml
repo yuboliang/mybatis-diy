@@ -1,9 +1,8 @@
 <mapper namespace="test">
 	<!-- select标签，封装了SQL语句信息、入参类型、结果映射类型 -->
 	<select id="findUserById"
-		parameterType="com.kkb.mybatis.po.User"
-		resultType="com.kkb.mybatis.po.User" 
-		statementType="prepared">
+		parameterType="com.jr.mybatis.demo.po.User"
+		resultType="com.jr.mybatis.demo.po.User" >
 
 		SELECT * FROM user WHERE id = #{id} and sex = #{sex} AND username like '%${username}'
 		<if test="username != null and username !='' ">

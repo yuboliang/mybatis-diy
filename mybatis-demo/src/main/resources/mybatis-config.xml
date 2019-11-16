@@ -16,7 +16,7 @@
 	<!-- 映射文件加载 -->
 	<mappers>
 		<!-- resource指定映射文件的类路径 -->
-		<mapper resource="mapper/UserMapper.xml"></mapper>
+		<mapper resource="mybatis/UserMapper.xml"></mapper>
 		<!-- <mapper resource="mapper/UserMapper.xml"></mapper> -->
 		<!-- <mapper resource="mapper/UserMapper.xml"></mapper> -->
 		<!-- <mapper resource="mapper/UserMapper.xml"></mapper> -->

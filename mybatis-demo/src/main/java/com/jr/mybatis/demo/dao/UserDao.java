@@ -20,4 +20,9 @@ public class UserDao {
 		Configuration configuration = builder.parse(inputStream);
 		System.out.println(configuration);
     }
+
+	public static void main(String[] args) {
+		UserDao userDao = new UserDao();
+		userDao.getConfiguration();
+	}
 }
