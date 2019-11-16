@@ -6,7 +6,7 @@
 
 		SELECT * FROM user WHERE id = #{id}
 		<if test="username != null and username !='' ">
-			AND username like '%${username}'
+			AND username like '%${username}%'
 		</if>
 	</select>
 </mapper>

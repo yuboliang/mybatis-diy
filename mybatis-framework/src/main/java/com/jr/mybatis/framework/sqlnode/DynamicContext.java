@@ -14,7 +14,7 @@ public class DynamicContext {
     private Object param;
 
     public void appendSql(String sql) {
-        sqlBuffer.append(sql);
+        sqlBuffer.append(sql).append(" ");
     }
 
     public String getSql() {

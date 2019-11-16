@@ -24,6 +24,7 @@ public class UserDao {
 
 		User param = new User();
 		param.setId(1);
+        param.setUsername("张");
 		User user = sqlSession.selectOne("test.findUserById", param);
 		System.out.println("user = " + user);
 

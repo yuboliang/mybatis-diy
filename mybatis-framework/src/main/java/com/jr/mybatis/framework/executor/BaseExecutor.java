@@ -29,7 +29,9 @@ public abstract class BaseExecutor implements Executor {
         Connection connection = getConnection(configuration);
         // 创建Statement
         String statementType = mappedStatement.getStatementType();
-        StatementHandler statementHandler = new StatementHandler(connection, statementType, boundSql.getSql());
+        String sql = boundSql.getSql();
+        System.out.println("sql = " + sql);
+        StatementHandler statementHandler = new StatementHandler(connection, statementType, sql);
         Statement statement = statementHandler.getStatement();
         // 设置参数
         ParameterHandler parameterHandler = new ParameterHandler(statement, statementType, param, mappedStatement.getParameterTypeClass(), boundSql.getParameterNameList());
