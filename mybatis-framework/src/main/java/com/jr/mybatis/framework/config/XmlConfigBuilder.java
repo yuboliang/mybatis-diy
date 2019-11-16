@@ -7,9 +7,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 import java.io.InputStream;
 import java.util.List;
@@ -113,7 +111,7 @@ public class XmlConfigBuilder {
         MappedStatement mappedStatement = new MappedStatement.MappedStatementBuilder().statementId(id)
                 .parameterTypeClass(parameterTypeClass).resultTypeClass(resultTypeClass)
                 .statementType(statementType).sqlSource(sqlSource).build();
-        configuration.addMappedStatement(namespace + id, mappedStatement);
+        configuration.addMappedStatement(namespace + "." + id, mappedStatement);
     }
 
     public Class<?> resolveClass(String className) {

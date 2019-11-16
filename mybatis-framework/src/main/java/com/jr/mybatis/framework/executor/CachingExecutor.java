@@ -2,7 +2,8 @@ package com.jr.mybatis.framework.executor;
 
 import com.jr.mybatis.framework.config.Configuration;
 import com.jr.mybatis.framework.config.MappedStatement;
-import com.jr.mybatis.framework.utils.GetSqlUtils;
+import com.jr.mybatis.framework.sqlsource.BoundSql;
+import com.jr.mybatis.framework.sqlsource.SqlSource;
 
 import java.util.List;
 import java.util.Map;
@@ -26,16 +27,18 @@ public class CachingExecutor implements Executor {
     @Override
     public <T> List<T> query(MappedStatement mappedStatement, Configuration configuration, Object param) {
         // 获取SQL
-        String sql = GetSqlUtils.getSql(mappedStatement, param);
+        SqlSource sqlSource = mappedStatement.getSqlSource();
+        BoundSql boundSql = sqlSource.getBoundSql(param);
+        String sql = boundSql.getSql();
 
         // 获取缓存中的数据
         Object cacheResult = oneLevelCache.get(sql);
-        if (cacheResult == null) {
+        if (cacheResult != null) {
             return (List<T>) cacheResult;
         }
 
         // 静态代理，交给其他的executor 执行SQL
-        List<T> result = query(mappedStatement, configuration, param, sql);
+        List<T> result = query(mappedStatement, configuration, param, boundSql);
 
         // 设置缓存
         oneLevelCache.put(mappedStatement.getStatementId(), result);
@@ -43,7 +46,7 @@ public class CachingExecutor implements Executor {
     }
 
     @Override
-    public <T> List<T> query(MappedStatement mappedStatement, Configuration configuration, Object param, String sql) {
-        return delegate.query(mappedStatement, configuration, param, sql);
+    public <T> List<T> query(MappedStatement mappedStatement, Configuration configuration, Object param, BoundSql boundSql) {
+        return delegate.query(mappedStatement, configuration, param, boundSql);
     }
 }

@@ -22,7 +22,7 @@ public class StatementHandler {
     private String sql;
 
     public Statement getStatement() {
-        if ("prepare".equals(statementType)) {
+        if ("prepared".equals(statementType)) {
             try {
                 return connection.prepareStatement(sql);
             } catch (SQLException e) {

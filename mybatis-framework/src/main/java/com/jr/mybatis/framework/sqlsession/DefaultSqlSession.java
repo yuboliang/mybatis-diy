@@ -21,6 +21,6 @@ public class DefaultSqlSession implements SqlSession {
     public <T> List<T> selectList(String statementId, Object param) {
 
         CachingExecutor cachingExecutor = new CachingExecutor(new SimpleExecutor());
-        return null;
+        return cachingExecutor.query(configuration.getMappedStatement(statementId), configuration, param);
     }
 }

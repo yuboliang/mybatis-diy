@@ -20,4 +20,8 @@ public class Configuration {
     public void addMappedStatement(String id, MappedStatement mappedStatement) {
         mappedStatementMap.put(id, mappedStatement);
     }
+
+    public MappedStatement getMappedStatement(String id) {
+        return mappedStatementMap.get(id);
+    }
 }

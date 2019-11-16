@@ -1,8 +1,6 @@
 package com.jr.mybatis.demo.dao;
 
 import com.jr.mybatis.demo.po.User;
-import com.jr.mybatis.framework.config.Configuration;
-import com.jr.mybatis.framework.config.XmlConfigBuilder;
 import com.jr.mybatis.framework.sqlsession.SqlSession;
 import com.jr.mybatis.framework.sqlsession.SqlSessionFactory;
 import com.jr.mybatis.framework.sqlsession.SqlSessionFactoryBuilder;
@@ -24,7 +22,10 @@ public class UserDao {
 
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 
-		User user = sqlSession.selectOne("test.findUserById", null);
+		User param = new User();
+		param.setId(1);
+		User user = sqlSession.selectOne("test.findUserById", param);
+		System.out.println("user = " + user);
 
 	}
 
