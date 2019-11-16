@@ -30,7 +30,7 @@ public abstract class BaseExecutor implements Executor {
         // 创建Statement
         String statementType = mappedStatement.getStatementType();
         String sql = boundSql.getSql();
-        System.out.println("sql = " + sql);
+        log.info(sql);
         StatementHandler statementHandler = new StatementHandler(connection, statementType, sql);
         Statement statement = statementHandler.getStatement();
         // 设置参数
