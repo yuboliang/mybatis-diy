@@ -1,7 +1,11 @@
 package com.jr.mybatis.demo.dao;
 
+import com.jr.mybatis.demo.po.User;
 import com.jr.mybatis.framework.config.Configuration;
 import com.jr.mybatis.framework.config.XmlConfigBuilder;
+import com.jr.mybatis.framework.sqlsession.SqlSession;
+import com.jr.mybatis.framework.sqlsession.SqlSessionFactory;
+import com.jr.mybatis.framework.sqlsession.SqlSessionFactoryBuilder;
 import com.jr.mybatis.framework.utils.ResourceUtils;
 
 import java.io.InputStream;
@@ -16,10 +20,13 @@ public class UserDao {
         String resource = "mybatis-config.xml";
 		 InputStream inputStream = ResourceUtils.getResourceAsStream(resource);
 
-		XmlConfigBuilder builder = new XmlConfigBuilder();
-		Configuration configuration = builder.parse(inputStream);
-		System.out.println(configuration);
-    }
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+
+		User user = sqlSession.selectOne("test.findUserById", null);
+
+	}
 
 	public static void main(String[] args) {
 		UserDao userDao = new UserDao();
